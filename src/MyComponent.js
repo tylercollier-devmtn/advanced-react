@@ -1,22 +1,38 @@
 import React, { Component } from 'react';
 import { makeAwesome, withTime } from './hocs';
 
+function fakeAxios(url) {
+  return new Promise(resolve => {
+    setTimeout(() => resolve({ data: { myValue: 7 }}), 1000);
+  });
+}
+
 class MyComponent extends Component {
+  constructor() {
+    super();
+    this.state = {
+      data: null,
+    }
+  }
+
+  componentDidMount() {
+    fakeAxios('http://mydata.com/data').then(response => {
+      this.setState({
+        data: response.data
+      });
+    })
+  }
+
   render() {
     return (
       <div>
-        <h2>
-          Is this component awesome?
-          {this.props.isAwesome ? 'You know it' : 'Nah'}
-        </h2>
-        <div>What time is it: {this.props.time}</div>
-        <div>
-          Here are all my props:
-          <pre>{JSON.stringify(this.props, null, 2)}</pre>
-        </div>
+        {this.state.data
+          ? <div>Here is the data: {this.state.data.myValue}</div>
+          : <div>Loading...</div>
+        }
       </div>
-    );
+    )
   }
 }
 
-export default withTime(makeAwesome(MyComponent));
+export default MyComponent;
