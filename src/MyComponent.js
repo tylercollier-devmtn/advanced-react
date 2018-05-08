@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { makeAwesome, withTime, withData } from './hocs';
 
 
-class MyComponent extends Component {
+export class MyComponent extends Component {
   render() {
     return (
       <div>

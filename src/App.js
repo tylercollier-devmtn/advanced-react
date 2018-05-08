@@ -4,8 +4,10 @@ import './App.css';
 import MyButton from './MyButton';
 import Button from './Button';
 import MyComponent from './MyComponent';
+import { MyComponent as MyComponentBase } from './MyComponent';
 import WithTime from './WithTime';
 import Switch from './RenderPropSwitch';
+import WithData from './WithData';
 
 function SomeComponent(props) {
   return (
@@ -17,15 +19,11 @@ class App extends Component {
   render() {
     return (
       <div>
-        <Button type="primary">Click me!</Button>
-        <Switch>
-          {(toggle, isOn) => {
-            return <div>
-              <input type="checkbox" value={isOn} onChange={toggle} />
-              The current value is {isOn ? 'true' : 'false'}
-            </div>
+        <WithData WrappedComponent={MyComponentBase}>
+          {(doFetch) => {
+            return <button onClick={() => doFetch('someurl')}>Initiate fetch</button>
           }}
-        </Switch>
+        </WithData>
       </div>
     );
   }
