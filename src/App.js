@@ -8,6 +8,7 @@ import { MyComponent as MyComponentBase } from './MyComponent';
 import WithTime from './WithTime';
 import Switch from './RenderPropSwitch';
 import WithData from './WithData';
+import { Tabs, TabPane } from './TabStuff';
 
 function SomeComponent(props) {
   return (
@@ -19,11 +20,11 @@ class App extends Component {
   render() {
     return (
       <div>
-        <WithData WrappedComponent={MyComponentBase}>
-          {(doFetch) => {
-            return <button onClick={() => doFetch('someurl')}>Initiate fetch</button>
-          }}
-        </WithData>
+        <Tabs defaultActiveKey="1">
+          <TabPane tab="Tab 1" key2="1">Content of Tab Pane 1</TabPane>
+          <TabPane tab="Tab 2" key2="2">Content of Tab Pane 2</TabPane>
+          <TabPane tab="Tab 3" key2="3">Content of Tab Pane 3</TabPane>
+        </Tabs>
       </div>
     );
   }
