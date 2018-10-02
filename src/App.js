@@ -6,8 +6,9 @@ import Elephants from './Elephants';
 // import GodsContainerLocalstorage from './GodsContainerLocalstorage';
 import GodsPresentational from './GodsPresentational';
 import axios from 'axios';
+import WithDataRenderProps from './WithDataRenderProps';
 
-const GodsWithData = withData('https://apis.devmountain.com/gods/')(GodsPresentational);
+// const GodsWithData = withData('https://apis.devmountain.com/gods/')(GodsPresentational);
 
 class App extends Component {
   render() {
@@ -20,11 +21,17 @@ class App extends Component {
         <Elephants count={7} />
         {/* <GodsContainer /> */}
         {/* <GodsContainerLocalstorage /> */}
-        <GodsWithData />
+        <WithDataRenderProps url="https://apis.devmountain.com/gods/">
+          {data => {
+            return <div>
+              There were {data.length} ancient gods
+            </div>
+          }}
+        </WithDataRenderProps>
       </div>
     );
   }
-}
+}   
 
 export default App;
 
