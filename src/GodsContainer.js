@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import GodsPresentational from './GodsPresentational';
 
 export default class Gods extends Component {
   state = {
@@ -7,10 +8,6 @@ export default class Gods extends Component {
     isLoading: false,
   }
 
-  updateName = val => {
-    this.setState({ name: val });
-  }
-  
   componentDidMount() {
     this.setState({ isLoading: true })
     axios.get('https://apis.devmountain.com/gods/', {
@@ -19,6 +16,7 @@ export default class Gods extends Component {
       }
     }).then(response => {
       this.setState({ gods: response.data, isLoading: false });
+      localStorage.setItem('gods', JSON.stringify(response.data));
     }).catch(error => {
       console.log('-------------- error', error);
     });
@@ -28,15 +26,10 @@ export default class Gods extends Component {
     const { gods, isLoading } = this.state;
     
     return (
-      <div className="gods">
+      <div className="gods-1">
       {isLoading
         ? <div>Loading...</div>
-        : <div>{gods.map(e => {
-          return <div>
-            <div>{e.name}</div>
-            <img src={e.image} />
-          </div>
-        })}</div>
+        : <GodsPresentational gods={gods} />
       }
         
       </div>

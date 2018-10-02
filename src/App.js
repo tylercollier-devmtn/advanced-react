@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
 import Elephants from './Elephants';
-import Gods from './Gods';
+import GodsContainer from './GodsContainer';
+import GodsContainerLocalstorage from './GodsContainerLocalstorage';
 
 class App extends Component {
   render() {
@@ -13,7 +14,8 @@ class App extends Component {
           <h1 className="App-title">Welcome to React</h1>
         </header>
         <Elephants count={7} />
-        <Gods />
+        <GodsContainer />
+        <GodsContainerLocalstorage />
       </div>
     );
   }
