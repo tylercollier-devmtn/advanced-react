@@ -2,8 +2,13 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
 import Elephants from './Elephants';
-import GodsContainer from './GodsContainer';
-import GodsContainerLocalstorage from './GodsContainerLocalstorage';
+// import GodsContainer from './GodsContainer';
+// import GodsContainerLocalstorage from './GodsContainerLocalstorage';
+import GodsPresentational from './GodsPresentational';
+import axios from 'axios';
+
+const GodsWithData = withData('https://apis.devmountain.com/gods/', GodsPresentational)
+// const UserData = withData('http://myserver.com/user-data', SomeOtherComponentPresentational)
 
 class App extends Component {
   render() {
@@ -14,11 +19,45 @@ class App extends Component {
           <h1 className="App-title">Welcome to React</h1>
         </header>
         <Elephants count={7} />
-        <GodsContainer />
-        <GodsContainerLocalstorage />
+        {/* <GodsContainer /> */}
+        {/* <GodsContainerLocalstorage /> */}
+        <GodsWithData />
       </div>
     );
   }
 }
 
 export default App;
+
+function withData(url, WrappedComponent) {
+  return class extends Component {
+    state = {
+      isLoading: false,
+      data: null
+    }
+
+    componentDidMount() {
+      this.setState({ isLoading: true })
+      axios.get(url, {
+        headers: {
+          apikey: 'tylercollier'
+        }
+      }).then(response => {
+        this.setState({ data: response.data, isLoading: false });
+      }).catch(error => {
+        console.log('-------------- error', error);
+      });
+    }
+
+    render() {
+      const { isLoading, data } = this.state;
+      
+      return <div>
+        {(isLoading || !data)
+          ? <div>Loading...</div>
+          : <WrappedComponent gods={data} />
+        }
+      </div>
+    }
+  }
+}
